@@ -19,4 +19,8 @@ use Inertia\Inertia;
 Route::get('login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'homePage'])->name('homePage');
+
 Route::get('cars', [\App\Http\Controllers\CarController::class, 'index'])->name('cars');
+Route::get('customers/create', [\App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
+Route::get('customers/list', [\App\Http\Controllers\CustomerController::class, 'index'])->name('customer.list');

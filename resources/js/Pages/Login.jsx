@@ -60,7 +60,7 @@ const Login = () => {
                     Login
                 </button>
             </div>
-            <InertiaLink href={route('cars')} ref={inertiaLinkRef} style={{ display: 'none' }}>Go to Authenticated Page</InertiaLink>
+            <InertiaLink href={route('homePage')} ref={inertiaLinkRef} style={{ display: 'none' }}>Go to Authenticated Page</InertiaLink>
         </div>
     );
 }
