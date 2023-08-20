@@ -14,7 +14,6 @@ class CustomerController extends Controller
 
     public function index(): Response
     {
-        //TODO: to be continued!
-        return Inertia::render('Customers/Create', []);
+        return Inertia::render('Customers/List', []);
     }
 }
