@@ -2,6 +2,14 @@ import React, {useEffect, useState} from 'react';
 import DashboardLayout from '../../Layouts/DashboardLayout.jsx';
 import axios from "axios";
 import {store} from "@/store/configureStore.js";
+import Select from 'react-select';
+
+const actionOptions = [
+    { value: 'edit', label: 'Edit' },
+    { value: 'delete', label: 'Delete' },
+    { value: 'addresses', label: 'Addresses' },
+];
+
 const ShowList = () => {
     const [customers, setCustomers] = useState([]);
     const token = store.getState().auth.token;
@@ -18,6 +26,13 @@ const ShowList = () => {
             });
     }, []);
 
+    const handleActionChange = (customerUuid, selectedOption) => {
+        if (selectedOption) {
+            const selectedAction = selectedOption.value;
+            window.location.href = `/customers/${customerUuid}/${selectedAction}`;
+        }
+    };
+
     return (
         <DashboardLayout>
             <h2 className="text-xl font-semibold mb-4">Show Customers</h2>
@@ -30,6 +45,7 @@ const ShowList = () => {
                         <th className="border p-3">Date of Birth</th>
                         <th className="border p-3">Email</th>
                         <th className="border p-3">Phone Number</th>
+                        <th className="border p-3">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,6 +56,15 @@ const ShowList = () => {
                             <td className="border p-3">{customer.dateOfBirth}</td>
                             <td className="border p-3">{customer.email}</td>
                             <td className="border p-3">{customer.phoneNumber}</td>
+                            <td className="border p-3">
+                                <Select
+                                    options={actionOptions}
+                                    onChange={(selectedOption) =>
+                                        handleActionChange(customer.uuid, selectedOption)
+                                    }
+                                    placeholder="Select"
+                                />
+                            </td>
                         </tr>
                     ))}
                     </tbody>
