@@ -1,26 +1,20 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CustomerController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('login', [\App\Http\Controllers\AuthController::class, 'login']);
-Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::get('login', [AuthController::class, 'login']);
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'homePage'])->name('homePage');
+Route::get('/', [HomeController::class, 'homePage'])->name('homePage');
 
+Route::get('customers/create', [CustomerController::class, 'create'])->name('customer.create');
+Route::get('customers/list', [CustomerController::class, 'index'])->name('customer.list');
+
+
+
+// TODO: out of project scope, will be removed
 Route::get('cars', [\App\Http\Controllers\CarController::class, 'index'])->name('cars');
-Route::get('customers/create', [\App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
-Route::get('customers/list', [\App\Http\Controllers\CustomerController::class, 'index'])->name('customer.list');
