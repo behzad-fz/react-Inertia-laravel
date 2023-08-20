@@ -8,6 +8,7 @@ const actionOptions = [
     { value: 'edit', label: 'Edit' },
     { value: 'delete', label: 'Delete' },
     { value: 'addresses', label: 'Addresses' },
+    { value: 'accounts', label: 'Accounts' },
 ];
 
 const ShowList = () => {
