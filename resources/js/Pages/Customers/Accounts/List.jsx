@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import DashboardLayout from '../../../Layouts/DashboardLayout.jsx';
 import AddAccountModal from './AddAccountModal.jsx';
+import ChangeStatusModal from './ChangeStatusModal.jsx';
 import Select from 'react-select';
 import {store} from "@/store/configureStore.js";
 import axios from "axios";
@@ -23,6 +24,7 @@ const ShowList = ({uuid}) => {
     }, []);
 
     const actionOptions = [
+        { value: 'change-status', label: 'Change Status' },
     ];
 
     const openModal = () => {
@@ -31,6 +33,21 @@ const ShowList = ({uuid}) => {
 
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+
+    const [isChangeStatusModalOpen, setIsChangeStatusModalOpen] = useState(false);
+    const [selectedAccountUuid, setSelectedAccountUuid] = useState('');
+    const [selectedAccountStatus, setSelectedAccountStatus] = useState('');
+
+    const openChangeStatusModal = (accountUuid, status) => {
+        setSelectedAccountUuid(accountUuid);
+        setSelectedAccountStatus(status);
+        setIsChangeStatusModalOpen(true);
+    };
+
+    const closeChangeStatusModal = () => {
+        setSelectedAccountUuid('');
+        setIsChangeStatusModalOpen(false);
     };
 
     return (
@@ -57,6 +74,9 @@ const ShowList = ({uuid}) => {
                             <td className="border p-3">
                                 <Select
                                     options={actionOptions}
+                                    onChange={(selectedOption) =>
+                                        openChangeStatusModal(account.uuid, account.status) // Open the modal on action selection
+                                    }
                                     placeholder="Select"
                                 />
                             </td>
@@ -69,6 +89,13 @@ const ShowList = ({uuid}) => {
                 isOpen={isModalOpen}
                 onClose={closeModal}
                 customerId={uuid}
+            />
+            <ChangeStatusModal
+                isOpen={isChangeStatusModalOpen}
+                onClose={closeChangeStatusModal}
+                accountUuid={selectedAccountUuid}
+                customerId={uuid}
+                currentStatus={selectedAccountStatus}
             />
         </DashboardLayout>
     );
