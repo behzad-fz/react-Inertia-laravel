@@ -52,7 +52,15 @@ const ShowList = ({uuid}) => {
 
     return (
         <DashboardLayout>
-            <h2 className="text-xl font-semibold mb-4">Show Accounts</h2>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Show Accounts</h2>
+                <button
+                    onClick={openModal}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
+                >
+                    Add New Account
+                </button>
+            </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full border">
                     <thead>
