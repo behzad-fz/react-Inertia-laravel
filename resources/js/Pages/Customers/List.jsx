@@ -3,6 +3,7 @@ import DashboardLayout from '../../Layouts/DashboardLayout.jsx';
 import axios from "axios";
 import {store} from "@/store/configureStore.js";
 import Select from 'react-select';
+import UpdateModal from './UpdateModal.jsx'; // Import the UpdateModal component
 
 const actionOptions = [
     { value: 'edit', label: 'Edit' },
@@ -12,6 +13,8 @@ const actionOptions = [
 ];
 
 const ShowList = () => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [customers, setCustomers] = useState([]);
     const token = store.getState().auth.token;
 
@@ -27,10 +30,15 @@ const ShowList = () => {
             });
     }, []);
 
-    const handleActionChange = (customerUuid, selectedOption) => {
+    const handleActionChange = (customer, selectedOption) => {
         if (selectedOption) {
             const selectedAction = selectedOption.value;
-            window.location.href = `/customers/${customerUuid}/${selectedAction}`;
+            if (selectedAction === 'edit') {
+                setSelectedCustomer(customer);
+                setIsEditModalOpen(true);
+            } else {
+                window.location.href = `/customers/${customer.uuid}/${selectedAction}`;
+            }
         }
     };
 
@@ -61,7 +69,7 @@ const ShowList = () => {
                                 <Select
                                     options={actionOptions}
                                     onChange={(selectedOption) =>
-                                        handleActionChange(customer.uuid, selectedOption)
+                                        handleActionChange(customer, selectedOption)
                                     }
                                     placeholder="Select"
                                 />
@@ -71,6 +79,11 @@ const ShowList = () => {
                     </tbody>
                 </table>
             </div>
+            <UpdateModal
+                isOpen={isEditModalOpen}
+                onClose={() => setIsEditModalOpen(false)}
+                customer={selectedCustomer}
+            />
         </DashboardLayout>
     );
 };
