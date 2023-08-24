@@ -4,16 +4,19 @@ import axios from 'axios';
 import {store} from "@/store/configureStore.js";
 
 const AddAccountModal = ({ isOpen, onClose, accountUuid,customerId, currentStatus }) => {
+    const [status, setStatus] = useState(currentStatus);
     const token = store.getState().auth.token;
-    const [formData, setFormData] = useState({
-        type: '',
-    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const formData = {
+            status: status,
+        }
+
         try {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
             const response = await axios.patch(
                 `http://localhost:9001/api/v1/customers/${customerId}/accounts/${accountUuid}`,
                 formData
@@ -25,14 +28,6 @@ const AddAccountModal = ({ isOpen, onClose, accountUuid,customerId, currentStatu
         } catch (error) {
             console.error('Error adding new address:', error);
         }
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
     };
 
     return (
@@ -49,15 +44,15 @@ const AddAccountModal = ({ isOpen, onClose, accountUuid,customerId, currentStatu
                         <label className="block text-gray-700">Status</label>
                         <select
                             name="status"
-                            value={formData.status}
-                            onChange={handleInputChange}
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
                             className="input resize-none w-full"
                         >
-                            <option value="ACTIVE" selected={"ACTIVE" === currentStatus}>Active</option>
-                            <option value="INACTIVE" selected={"INACTIVE" === currentStatus}>Inactive</option>
-                            <option value="CLOSED" selected={"CLOSED" === currentStatus}>Closed</option>
-                            <option value="SUSPENDED" selected={"SUSPENDED" === currentStatus}>Suspended</option>
-                            <option value="UNDER_INVESTIGATION" selected={"UNDER_INVESTIGATION" === currentStatus}>Under Investigation</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">Inactive</option>
+                            <option value="CLOSED">Closed</option>
+                            <option value="SUSPENDED">Suspended</option>
+                            <option value="UNDER_INVESTIGATION">Under Investigation</option>
                         </select>
                     </div>
                     <div className="flex justify-end space-x-2">
