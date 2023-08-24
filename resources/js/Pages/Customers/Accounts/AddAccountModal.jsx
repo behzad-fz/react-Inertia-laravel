@@ -4,13 +4,15 @@ import axios from 'axios';
 import {store} from "@/store/configureStore.js";
 
 const AddAccountModal = ({ isOpen, onClose, customerId }) => {
+    const [type, setType] = useState('SAVINGS');
     const token = store.getState().auth.token;
-    const [formData, setFormData] = useState({
-        type: '',
-    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = {
+            type: type,
+        }
 
         try {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -19,7 +21,6 @@ const AddAccountModal = ({ isOpen, onClose, customerId }) => {
                 formData
             );
 
-            // Handle success and close the modal
             onClose();
             window.location.reload();
         } catch (error) {
@@ -49,8 +50,8 @@ const AddAccountModal = ({ isOpen, onClose, customerId }) => {
                         <label className="block text-gray-700">Type</label>
                         <select
                             name="type"
-                            value={formData.type}
-                            onChange={handleInputChange}
+                            value={type}
+                            onChange={(e) => setType(e.target.value)}
                             className="input resize-none w-full"
                         >
                             <option value="SAVINGS">Savings</option>

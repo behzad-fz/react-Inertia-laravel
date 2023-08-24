@@ -3,7 +3,7 @@ import DashboardLayout from '../../Layouts/DashboardLayout.jsx';
 import axios from "axios";
 import {store} from "@/store/configureStore.js";
 import Select from 'react-select';
-import UpdateModal from './UpdateModal.jsx'; // Import the UpdateModal component
+import UpdateModal from './UpdateModal.jsx';
 
 const actionOptions = [
     { value: 'edit', label: 'Edit' },
@@ -79,11 +79,13 @@ const ShowList = () => {
                     </tbody>
                 </table>
             </div>
-            <UpdateModal
-                isOpen={isEditModalOpen}
-                onClose={() => setIsEditModalOpen(false)}
-                customer={selectedCustomer}
-            />
+            {isEditModalOpen && (
+                <UpdateModal
+                    isOpen={isEditModalOpen}
+                    onClose={() => setIsEditModalOpen(false)}
+                    customer={selectedCustomer}
+                />
+            )}
         </DashboardLayout>
     );
 };

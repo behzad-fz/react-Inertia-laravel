@@ -4,47 +4,45 @@ import { store } from '@/store/configureStore.js';
 import axios from 'axios';
 
 const UpdateModal = ({ isOpen, onClose, customer}) => {
-
-    const defaultCustomer = customer || {
-        uuid: '',
-        firstName: '',
-        lastName: '',
-        dateOfBirth: '',
-        email: '',
-        phoneNumber: '',
-    };
-
-    console.log(customer)
-    console.log(defaultCustomer.firstName
-    )
-    const [firstName, setFirstName] = useState(defaultCustomer.firstName);
-    const [lastName, setLastName] = useState(defaultCustomer.lastName);
-    const [dateOfBirth, setDateOfBirth] = useState(defaultCustomer.dateOfBirth);
-    const [email, setEmail] = useState(defaultCustomer.email);
-    const [phoneNumber, setPhoneNumber] = useState(defaultCustomer.phoneNumber);
+    const [firstName, setFirstName] = useState(customer.firstName);
+    const [lastName, setLastName] = useState(customer.lastName);
+    const [dateOfBirth, setDateOfBirth] = useState(customer.dateOfBirth);
+    const [email, setEmail] = useState(customer.email);
+    const [phoneNumber, setPhoneNumber] = useState(customer.phoneNumber);
     const token = store.getState().auth.token;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const updatedCustomer = {
-            firstName,
-            lastName,
-            dateOfBirth,
-            email,
-            phoneNumber
+            firstName : firstName,
+            lastName : lastName,
+            dateOfBirth :
+            (() => {
+                const formattedDate = new Date(dateOfBirth)
+                    .toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' }
+                );
+
+                const [day, month, year] = formattedDate.split(' ');
+
+                return `${month} ${day} ${year}`;
+            })()
+            ,
+            email: email,
+            phoneNumber: phoneNumber
         };
 
         try {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const response = await axios.put(
-                `http://localhost:9001/api/v1/customers/${defaultCustomer.uuid}`,
+                `http://localhost:9001/api/v1/customers/${customer.uuid}`,
                 updatedCustomer
             );
-            console.log('Customer updated:', response.data);
-            onClose(); // Close the modal after successful update
+
+            onClose();
+            window.location.reload();
         } catch (error) {
-            console.error('Error wwasxzupdating customer:', error);
+            console.error('Error updating customer:', error);
         }
     };
 
@@ -115,7 +113,7 @@ const UpdateModal = ({ isOpen, onClose, customer}) => {
                             onClick={onClose}
                             className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 focus:outline-none focus:ring ml-2"
                         >
-                            Cancel
+                            Abort
                         </button>
                     </div>
                 </form>

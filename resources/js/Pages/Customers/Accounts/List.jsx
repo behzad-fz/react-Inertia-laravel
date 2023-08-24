@@ -5,6 +5,7 @@ import ChangeStatusModal from './ChangeStatusModal.jsx';
 import Select from 'react-select';
 import {store} from "@/store/configureStore.js";
 import axios from "axios";
+import UpdateModal from "@/Pages/Customers/UpdateModal.jsx";
 
 const ShowList = ({uuid}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,9 +40,9 @@ const ShowList = ({uuid}) => {
     const [selectedAccountUuid, setSelectedAccountUuid] = useState('');
     const [selectedAccountStatus, setSelectedAccountStatus] = useState('');
 
-    const openChangeStatusModal = (accountUuid, status) => {
-        setSelectedAccountUuid(accountUuid);
-        setSelectedAccountStatus(status);
+    const openChangeStatusModal = (account) => {
+        setSelectedAccountUuid(account.uuid);
+        setSelectedAccountStatus(account.status);
         setIsChangeStatusModalOpen(true);
     };
 
@@ -83,7 +84,7 @@ const ShowList = ({uuid}) => {
                                 <Select
                                     options={actionOptions}
                                     onChange={(selectedOption) =>
-                                        openChangeStatusModal(account.uuid, account.status) // Open the modal on action selection
+                                        openChangeStatusModal(account)
                                     }
                                     placeholder="Select"
                                 />
@@ -98,13 +99,15 @@ const ShowList = ({uuid}) => {
                 onClose={closeModal}
                 customerId={uuid}
             />
-            <ChangeStatusModal
-                isOpen={isChangeStatusModalOpen}
-                onClose={closeChangeStatusModal}
-                accountUuid={selectedAccountUuid}
-                customerId={uuid}
-                currentStatus={selectedAccountStatus}
-            />
+            {isChangeStatusModalOpen && (
+                <ChangeStatusModal
+                    isOpen={isChangeStatusModalOpen}
+                    onClose={closeChangeStatusModal}
+                    accountUuid={selectedAccountUuid}
+                    customerId={uuid}
+                    currentStatus={selectedAccountStatus}
+                />
+            )}
         </DashboardLayout>
     );
 };
