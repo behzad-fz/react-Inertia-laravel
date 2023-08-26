@@ -87,6 +87,20 @@ const ShowList = ({uuid}) => {
                                         openChangeStatusModal(account)
                                     }
                                     placeholder="Select"
+                                    menuPlacement="top"
+                                    isSearchable={false}
+                                    styles={{
+                                        control: (provided, state) => ({
+                                            ...provided,
+                                            backgroundColor: 'transparent',
+                                            border: 'none',
+                                            boxShadow: 'none',
+                                            cursor: 'pointer',
+                                        }),
+                                    }}
+                                    components={{
+                                        IndicatorSeparator: () => null,
+                                    }}
                                 />
                             </td>
                         </tr>

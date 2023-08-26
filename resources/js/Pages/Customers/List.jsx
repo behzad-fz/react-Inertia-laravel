@@ -86,7 +86,7 @@ const ShowList = () => {
                             <td className="border p-3">{customer.phoneNumber}</td>
                             <td className="border p-3">
                                 {isConfirmDelete && selectedCustomer === customer ? (
-                                    <div className="bg-white rounded-md p-6 shadow-lg absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <div className="bg-white rounded-md p-6 shadow-lg fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                         <p className="text-center text-xl font-semibold mb-4">Confirm Deletion</p>
                                         <p className="mb-4">Are you sure you want to delete this customer?</p>
                                         <div className="flex justify-center space-x-4">
@@ -100,19 +100,32 @@ const ShowList = () => {
                                                 onClick={() => setIsConfirmDelete(false)}
                                                 className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
                                             >
-                                                Cancel
+                                                Abort
                                             </button>
                                         </div>
                                     </div>
-                                ) : (
-                                    <Select
-                                        options={actionOptions}
-                                        onChange={(selectedOption) =>
-                                            handleActionChange(customer, selectedOption)
-                                        }
-                                        placeholder="Select"
-                                    />
-                                )}
+                                ) : null}
+                                <Select
+                                    options={actionOptions}
+                                    onChange={(selectedOption) =>
+                                        handleActionChange(customer, selectedOption)
+                                    }
+                                    placeholder="Select"
+                                    menuPlacement="auto"
+                                    isSearchable={false}
+                                    styles={{
+                                        control: (provided, state) => ({
+                                            ...provided,
+                                            backgroundColor: 'transparent',
+                                            border: 'none',
+                                            boxShadow: 'none',
+                                            cursor: 'pointer',
+                                        }),
+                                    }}
+                                    components={{
+                                        IndicatorSeparator: () => null,
+                                    }}
+                                />
                             </td>
                         </tr>
                     ))}

@@ -1,17 +1,16 @@
 import React from 'react';
 import Sidebar from '../Components/Sidebar';
+import './../../css/dashboard-layout.css';
 
 const DashboardLayout = ({ children }) => {
     return (
-        <div className="flex">
-            {/* Sidebar */}
-            <Sidebar />
+    <div className="dashboard-layout">
+        <Sidebar />
 
-            {/* Main Content */}
-            <div className="w-3/4 p-4">
-                {children}
-            </div>
+        <div className="main-content">
+            {children}
         </div>
+    </div>
     );
 };
 
