@@ -17,6 +17,7 @@ const ShowList = () => {
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [customers, setCustomers] = useState([]);
     const [isConfirmDelete, setIsConfirmDelete] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     const token = store.getState().auth.token;
 
     useEffect(() => {
@@ -61,9 +62,35 @@ const ShowList = () => {
         }
     };
 
+    const handleSearch = async () => {
+        try {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const response = await axios.get(
+                `http://localhost:9001/api/v1/customers/search?queryString=${searchQuery}`
+            );
+            setCustomers(response.data);
+        } catch (error) {
+            console.error('Error searching customers:', error);
+        }
+    };
+
     return (
         <DashboardLayout>
-            <h2 className="text-xl font-semibold mb-4">Show Customers</h2>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Show Customers</h2>
+                <div className="flex">
+                    <input
+                        type="text"
+                        placeholder="Search customers..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="border rounded px-2 py-1 text-sm"
+                    />
+                    <button onClick={handleSearch} className="bg-blue-500 text-white px-2 py-1 rounded-md ml-2">
+                        Search
+                    </button>
+                </div>
+            </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full border">
                     <thead>
