@@ -104,16 +104,28 @@ const ShowList = () => {
                                             </button>
                                         </div>
                                     </div>
-                                ) : (
-                                    <Select
-                                        options={actionOptions}
-                                        onChange={(selectedOption) =>
-                                            handleActionChange(customer, selectedOption)
-                                        }
-                                        placeholder="Select"
-                                        menuPlacement="auto"
-                                    />
-                                )}
+                                ) : null}
+                                <Select
+                                    options={actionOptions}
+                                    onChange={(selectedOption) =>
+                                        handleActionChange(customer, selectedOption)
+                                    }
+                                    placeholder="Select"
+                                    menuPlacement="auto"
+                                    isSearchable={false}
+                                    styles={{
+                                        control: (provided, state) => ({
+                                            ...provided,
+                                            backgroundColor: 'transparent',
+                                            border: 'none',
+                                            boxShadow: 'none',
+                                            cursor: 'pointer',
+                                        }),
+                                    }}
+                                    components={{
+                                        IndicatorSeparator: () => null,
+                                    }}
+                                />
                             </td>
                         </tr>
                     ))}
