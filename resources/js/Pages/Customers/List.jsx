@@ -111,6 +111,7 @@ const ShowList = () => {
                                             handleActionChange(customer, selectedOption)
                                         }
                                         placeholder="Select"
+                                        menuPlacement="auto"
                                     />
                                 )}
                             </td>
