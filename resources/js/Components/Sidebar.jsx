@@ -4,7 +4,7 @@ import { InertiaLink } from '@inertiajs/inertia-react';
 const Sidebar = () => {
 
     return (
-        <div className="w-1/4 bg-gray-800 text-white p-4">
+        <div className="w-1/4 bg-gray-800 text-white p-4 h-full">
             {/* Main Menu Items */}
             <ul className="space-y-1">
                 <li>

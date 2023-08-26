@@ -87,7 +87,7 @@ const ShowList = ({uuid}) => {
                                         openChangeStatusModal(account)
                                     }
                                     placeholder="Select"
-                                    menuPlacement="auto"
+                                    menuPlacement="top"
                                     isSearchable={false}
                                     styles={{
                                         control: (provided, state) => ({
