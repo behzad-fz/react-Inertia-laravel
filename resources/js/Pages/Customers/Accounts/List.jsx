@@ -5,12 +5,15 @@ import ChangeStatusModal from './ChangeStatusModal.jsx';
 import Select from 'react-select';
 import {store} from "@/store/configureStore.js";
 import axios from "axios";
-import UpdateModal from "@/Pages/Customers/UpdateModal.jsx";
+import { useParams } from 'react-router-dom';
 
-const ShowList = ({uuid}) => {
+
+const ShowList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [accounts, setAccounts] = useState([]);
     const token = store.getState().auth.token;
+    const { uuid } = useParams();
+
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
