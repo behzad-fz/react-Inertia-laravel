@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch } from 'react-redux';
 import {clearToken, setToken} from '../store/authSlice';
 import {store} from "@/store/configureStore.js";
+import {Navigate} from "react-router-dom";
 
 
 const Logout = () => {
@@ -23,11 +24,7 @@ const Logout = () => {
             );
     }, []);
 
-    return (
-        <h1>
-            Logout
-        </h1>
-    );
+    return <Navigate to="/login" />;
 }
 
 export default Logout
