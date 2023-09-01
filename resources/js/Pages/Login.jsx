@@ -1,9 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setToken } from '../store/authSlice';
 import {useNavigate} from "react-router-dom";
-
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -12,22 +11,19 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-
-    const handleLogin = () => {
-        axios
-            .post("http://localhost:9001/api/v1/auth/authenticate", {
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post("http://localhost:9001/api/v1/auth/authenticate", {
                 username: username,
                 password: password
-            })
-            .then((response) => {
-                dispatch(setToken(response.data.token));
-                navigate("/");
-            })
-            .catch((error) => {
-                console.error("Authentication Error:", error);
             });
-    }
 
+            await dispatch(setToken(response.data.token));
+            navigate("/");
+        } catch (error) {
+            console.error("Authentication Error:", error);
+        }
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
