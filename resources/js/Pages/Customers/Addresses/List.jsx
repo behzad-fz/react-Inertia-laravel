@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react';
 import DashboardLayout from '../../../Layouts/DashboardLayout.jsx';
 import axios from "axios";
 import {store} from "@/store/configureStore.js";
-import { InertiaLink } from '@inertiajs/inertia-react';
 import AddAddressModal from './AddAddressModal';
+import { useParams } from 'react-router-dom';
 
-const ShowList = ({uuid}) => {
-    console.log(uuid);
+
+const ShowList = () => {
     const [addresses, setAddresses] = useState([]);
     const token = store.getState().auth.token;
+    const { uuid } = useParams();
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

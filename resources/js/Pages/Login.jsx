@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setToken } from '../store/authSlice';
-import { InertiaLink } from '@inertiajs/inertia-react';
+import {useNavigate} from "react-router-dom";
 
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const inertiaLinkRef = useRef(); // Create a ref for the InertiaLink
+    const navigate = useNavigate();
 
 
     const handleLogin = () => {
@@ -21,7 +21,7 @@ const Login = () => {
             })
             .then((response) => {
                 dispatch(setToken(response.data.token));
-                inertiaLinkRef.current.click();
+                navigate("/");
             })
             .catch((error) => {
                 console.error("Authentication Error:", error);
@@ -60,7 +60,6 @@ const Login = () => {
                     Login
                 </button>
             </div>
-            <InertiaLink href={route('homePage')} ref={inertiaLinkRef} style={{ display: 'none' }}>Go to Authenticated Page</InertiaLink>
         </div>
     );
 }

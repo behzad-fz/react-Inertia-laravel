@@ -1,7 +1,8 @@
 import React from 'react';
-import { InertiaLink } from '@inertiajs/inertia-react';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+    const navigate = useNavigate();
 
     return (
         <div className="w-1/4 bg-gray-800 text-white p-4 h-full">
@@ -12,10 +13,11 @@ const Sidebar = () => {
                     {/* Sub-menu */}
                     <ul className="ml-4 space-y-1">
                         <li>
-                            <InertiaLink href={route('customer.create')}>Create Customer</InertiaLink>
+                            <a onClick={() => navigate('/customers/create')}>Create Customer</a>
+
                         </li>
                         <li>
-                            <InertiaLink href={route('customer.list')}>Show Customers</InertiaLink>
+                            <a onClick={() => navigate('/customers/list')}>Show Customers</a>
                         </li>
                     </ul>
                 </li>
@@ -24,12 +26,12 @@ const Sidebar = () => {
 
             {/* Logout Button */}
             <div className="mt-4">
-                <InertiaLink
-                    href={route('logout')}
+                <button
+                    onClick={() => navigate('/logout')}
                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
                 >
                     Logout
-                </InertiaLink>
+                </button>
             </div>
         </div>
     );
