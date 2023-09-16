@@ -11,6 +11,7 @@ import AddressList from './Pages/Customers/Addresses/List.jsx';
 import AccountList from './Pages/Customers/Accounts/List.jsx';
 import AuthenticatedEmployee from "@/Guards/AuthenticatedEmployee.jsx";
 import AuthenticatedCustomer from "@/Guards/AuthenticatedCustomer.jsx";
+import MyAccounts from "@/Pages/CustomerPanel/MyAccounts.jsx";
 
 const WebRoutes = () => {
     return (
@@ -30,6 +31,7 @@ const WebRoutes = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/" element={<AuthenticatedCustomer element={<HomePage />} />} />
                 <Route path="/logout" element={<AuthenticatedCustomer element={<Logout />} />} />
+                <Route path="/my-accounts" element={<AuthenticatedCustomer element={<MyAccounts />} />} />
             </Routes>
         </Router>
     );
