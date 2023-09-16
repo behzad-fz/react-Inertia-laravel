@@ -26,7 +26,6 @@ const Login = () => {
             ).catch(
                 error => {
                     if (error.response && error.response.status === 401) {
-                        console.log("two")
                         toast.error('Unauthorized. Please check your credentials.', {
                             position: toast.POSITION.TOP_CENTER,
                             autoClose: 5000, // Close after 5 seconds
@@ -35,7 +34,6 @@ const Login = () => {
                             className: 'toast', // Custom class for the toast container
                         });
                     } else {
-                        console.log("three")
                         console.error("Authentication Error:", error);
                     }
                 }

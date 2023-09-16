@@ -3,7 +3,7 @@ import axios from "axios";
 import {useDispatch, useSelector} from 'react-redux';
 import {setToken, setUserType} from '../store/authSlice';
 import {useNavigate} from "react-router-dom";
-import {store} from "@/store/configureStore.js";
+import {toast, ToastContainer} from "react-toastify";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -13,20 +13,30 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        try {
-             axios.post("http://localhost:9001/api/v1/auth/authenticate", {
-                username: username,
-                password: password
-            }).then(
-               async response => {
-                    await dispatch(setToken(response.data.token));
-                    await dispatch(setUserType("employee"));
-                   navigate("/employee/");
-                }
-            );
-        } catch (error) {
-            console.error("Authentication Error:", error);
-        }
+         axios.post("http://localhost:9001/api/v1/auth/authenticate", {
+            username: username,
+            password: password
+        }).then(
+           async response => {
+                await dispatch(setToken(response.data.token));
+                await dispatch(setUserType("employee"));
+               navigate("/employee/");
+            }
+        ).catch(
+             error => {
+                 if (error.response && error.response.status === 401) {
+                     toast.error('Unauthorized. Please check your credentials.', {
+                         position: toast.POSITION.TOP_CENTER,
+                         autoClose: 5000, // Close after 5 seconds
+                         hideProgressBar: true, // Hide the progress bar
+                         bodyClassName: 'toast-body', // Custom class for the toast body
+                         className: 'toast', // Custom class for the toast container
+                     });
+                 } else {
+                     console.error("Authentication Error:", error);
+                 }
+             }
+         );
     }
 
     return (
@@ -60,6 +70,20 @@ const Login = () => {
                     Login
                 </button>
             </div>
+            <ToastContainer
+                className="toast-container" // Custom class for the toast container
+                toastClassName="toast" // Custom class for the toast
+                bodyClassName="toast-body" // Custom class for the toast body
+                position={toast.POSITION.TOP_CENTER}
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 }
