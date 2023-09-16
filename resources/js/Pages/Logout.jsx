@@ -9,6 +9,7 @@ import {Navigate} from "react-router-dom";
 const Logout = () => {
     const dispatch = useDispatch();
     const token = store.getState().auth.token;
+    const userType = store.getState().auth.userType;
 
 
     useEffect(() => {
@@ -24,7 +25,10 @@ const Logout = () => {
             );
     }, []);
 
-    return <Navigate to="/employee/login" />;
+    console.log("logging out");
+    console.log(userType)
+    const login = userType === "employee" ? "/employee/login" : "/login";
+    return <Navigate to={login} />;
 }
 
 export default Logout

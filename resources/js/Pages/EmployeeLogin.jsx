@@ -3,8 +3,7 @@ import axios from "axios";
 import {useDispatch, useSelector} from 'react-redux';
 import {setToken, setUserType} from '../store/authSlice';
 import {useNavigate} from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast, ToastContainer} from "react-toastify";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -14,36 +13,36 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-             axios.post("http://localhost:9001/api/v1/customer-auth/authenticate", {
-                username: username,
-                password: password
-            }).then(
-               async response => {
-                    await dispatch(setToken(response.data.token));
-                    await dispatch(setUserType("customer"));
-                   navigate("/");
-                }
-            ).catch(
-                error => {
-                    if (error.response && error.response.status === 401) {
-                        toast.error('Unauthorized. Please check your credentials.', {
-                            position: toast.POSITION.TOP_CENTER,
-                            autoClose: 5000, // Close after 5 seconds
-                            hideProgressBar: true, // Hide the progress bar
-                            bodyClassName: 'toast-body', // Custom class for the toast body
-                            className: 'toast', // Custom class for the toast container
-                        });
-                    } else {
-                        console.error("Authentication Error:", error);
-                    }
-                }
-             );
+         axios.post("http://localhost:9001/api/v1/auth/authenticate", {
+            username: username,
+            password: password
+        }).then(
+           async response => {
+                await dispatch(setToken(response.data.token));
+                await dispatch(setUserType("employee"));
+               navigate("/employee/");
+            }
+        ).catch(
+             error => {
+                 if (error.response && error.response.status === 401) {
+                     toast.error('Unauthorized. Please check your credentials.', {
+                         position: toast.POSITION.TOP_CENTER,
+                         autoClose: 5000, // Close after 5 seconds
+                         hideProgressBar: true, // Hide the progress bar
+                         bodyClassName: 'toast-body', // Custom class for the toast body
+                         className: 'toast', // Custom class for the toast container
+                     });
+                 } else {
+                     console.error("Authentication Error:", error);
+                 }
+             }
+         );
     }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
             <div className="max-w-md w-full p-6 bg-white shadow-md rounded-md">
-                <h1 className="text-2xl font-semibold mb-4">Customer Login</h1>
+                <h1 className="text-2xl font-semibold mb-4">Employee Login</h1>
                 <div className="mb-4">
                     <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username:</label>
                     <input
