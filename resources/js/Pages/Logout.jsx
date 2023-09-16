@@ -24,7 +24,7 @@ const Logout = () => {
             );
     }, []);
 
-    return <Navigate to="/login" />;
+    return <Navigate to="/employee/login" />;
 }
 
 export default Logout

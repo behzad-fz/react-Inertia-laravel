@@ -13,7 +13,7 @@ const WebRoutes = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/login" element={<Login />} />
+                <Route path="/employee/login" element={<Login />} />
                 <Route path="/" element={<Authenticated element={<HomePage />} />} />
                 <Route path="/logout" element={<Authenticated element={<Logout />} />} />
 
