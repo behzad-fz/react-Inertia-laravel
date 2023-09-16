@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import EmployeeLogin from './Pages/EmployeeLogin.jsx';
+import EmployeeHomePage from "@/Pages/EmployeeHomePage.jsx";
 import Login from './Pages/Login.jsx';
 import HomePage from './Pages/HomePage.jsx';
 import Logout from './Pages/Logout.jsx';
@@ -7,21 +9,27 @@ import CreateCustomer from './Pages/Customers/Create.jsx';
 import CustomerList from './Pages/Customers/List.jsx';
 import AddressList from './Pages/Customers/Addresses/List.jsx';
 import AccountList from './Pages/Customers/Accounts/List.jsx';
-import Authenticated from "@/Guards/Authenticated.jsx";
+import AuthenticatedEmployee from "@/Guards/AuthenticatedEmployee.jsx";
+import AuthenticatedCustomer from "@/Guards/AuthenticatedCustomer.jsx";
 
 const WebRoutes = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/employee/login" element={<Login />} />
-                <Route path="/" element={<Authenticated element={<HomePage />} />} />
-                <Route path="/logout" element={<Authenticated element={<Logout />} />} />
+                <Route path="/employee/login" element={<EmployeeLogin />} />
+                <Route path="/employee/" element={<AuthenticatedEmployee element={<EmployeeHomePage />} />} />
+                <Route path="/employee/logout" element={<AuthenticatedEmployee element={<Logout />} />} />
 
-                <Route path="/customers/create" element={<Authenticated element={<CreateCustomer />} />} />
-                <Route path="/customers/list" element={<Authenticated element={<CustomerList />} />} />
+                <Route path="/customers/create" element={<AuthenticatedEmployee element={<CreateCustomer />} />} />
+                <Route path="/customers/list" element={<AuthenticatedEmployee element={<CustomerList />} />} />
 
-                <Route path="/customers/:uuid/addresses" element={<Authenticated element={<AddressList />} />} />
-                <Route path="/customers/:uuid/accounts" element={<Authenticated element={<AccountList />} />} />
+                <Route path="/customers/:uuid/addresses" element={<AuthenticatedEmployee element={<AddressList />} />} />
+                <Route path="/customers/:uuid/accounts" element={<AuthenticatedEmployee element={<AccountList />} />} />
+
+
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<AuthenticatedCustomer element={<HomePage />} />} />
+                <Route path="/logout" element={<AuthenticatedCustomer element={<Logout />} />} />
             </Routes>
         </Router>
     );
