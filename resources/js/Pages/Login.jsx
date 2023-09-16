@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { setToken } from '../store/authSlice';
 import {useNavigate} from "react-router-dom";
+import {store} from "@/store/configureStore.js";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -11,15 +12,17 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleLogin = () => {
         try {
-            const response = await axios.post("http://localhost:9001/api/v1/auth/authenticate", {
+             axios.post("http://localhost:9001/api/v1/auth/authenticate", {
                 username: username,
                 password: password
-            });
-
-            await dispatch(setToken(response.data.token));
-            navigate("/");
+            }).then(
+               async response => {
+                    await dispatch(setToken(response.data.token));
+                     navigate("/");
+                }
+            );
         } catch (error) {
             console.error("Authentication Error:", error);
         }
