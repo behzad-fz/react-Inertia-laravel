@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import DashboardLayout from '../../Layouts/DashboardLayout.jsx';
+import EmployeeDashboardLayout from '../../Layouts/EmployeeDashboardLayout.jsx';
 import {store} from "@/store/configureStore.js";
 import axios from "axios";
 
@@ -34,7 +34,7 @@ const Create = () => {
     };
 
     return (
-        <DashboardLayout>
+        <EmployeeDashboardLayout>
             <h2 className="text-xl font-semibold mb-4">Create Customer</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -61,7 +61,7 @@ const Create = () => {
                     <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create</button>
                 </div>
             </form>
-        </DashboardLayout>
+        </EmployeeDashboardLayout>
     );
 };
 
