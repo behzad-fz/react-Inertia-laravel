@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import DashboardLayout from '../../Layouts/DashboardLayout.jsx';
+import EmployeeDashboardLayout from '../../Layouts/EmployeeDashboardLayout.jsx';
 import axios from "axios";
 import {store} from "@/store/configureStore.js";
 import Select from 'react-select';
@@ -75,7 +75,7 @@ const ShowList = () => {
     };
 
     return (
-        <DashboardLayout>
+        <EmployeeDashboardLayout>
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Show Customers</h2>
                 <div className="flex">
@@ -166,7 +166,7 @@ const ShowList = () => {
                     customer={selectedCustomer}
                 />
             )}
-        </DashboardLayout>
+        </EmployeeDashboardLayout>
     );
 };
 

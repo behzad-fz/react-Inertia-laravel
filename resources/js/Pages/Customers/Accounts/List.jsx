@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import DashboardLayout from '../../../Layouts/DashboardLayout.jsx';
+import EmployeeDashboardLayout from '../../../Layouts/EmployeeDashboardLayout.jsx';
 import AddAccountModal from './AddAccountModal.jsx';
 import ChangeStatusModal from './ChangeStatusModal.jsx';
 import Select from 'react-select';
@@ -55,7 +55,7 @@ const ShowList = () => {
     };
 
     return (
-        <DashboardLayout>
+        <EmployeeDashboardLayout>
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Show Accounts</h2>
                 <button
@@ -125,7 +125,7 @@ const ShowList = () => {
                     currentStatus={selectedAccountStatus}
                 />
             )}
-        </DashboardLayout>
+        </EmployeeDashboardLayout>
     );
 };
 

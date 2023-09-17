@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import DashboardLayout from '../../../Layouts/DashboardLayout.jsx';
+import EmployeeDashboardLayout from '../../../Layouts/EmployeeDashboardLayout.jsx';
 import axios from "axios";
 import {store} from "@/store/configureStore.js";
 import AddAddressModal from './AddAddressModal';
@@ -35,7 +35,7 @@ const ShowList = () => {
 
 
     return (
-        <DashboardLayout>
+        <EmployeeDashboardLayout>
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Show Addresses</h2>
                 <button
@@ -74,7 +74,7 @@ const ShowList = () => {
                 onClose={closeModal}
                 customerId={uuid}
             />
-        </DashboardLayout>
+        </EmployeeDashboardLayout>
     );
 };
 
